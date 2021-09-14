@@ -1,14 +1,24 @@
 import os
 import sys
+from importlib_metadata import version, PackageNotFoundError
 
 import click
 from flask import Blueprint
 
 
+__version__ = "Unknown version"
+
+# This uses importlib.metadata behaviour added in Python 3.8
+# and relies on setuptools_scm.
+try:
+    __version__ = version("{{cookiecutter.module_name}}")
+except PackageNotFoundError:
+    # package is not installed
+    pass
+
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-
-__version__ = "0.1"  # TODO: get version via scm_stuptools
 
 
 # API
