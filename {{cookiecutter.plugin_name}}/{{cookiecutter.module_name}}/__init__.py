@@ -1,8 +1,5 @@
-import os
-import sys
 from importlib_metadata import version, PackageNotFoundError
 
-import click
 from flask import Blueprint
 
 
@@ -15,10 +12,6 @@ try:
 except PackageNotFoundError:
     # package is not installed
     pass
-
-
-HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, HERE)
 
 
 # API
@@ -34,10 +27,6 @@ from {{cookiecutter.module_name}}.api import somedata  # noqa: E402,F401
 from {{cookiecutter.module_name}}.ui.views import dashboard  # noqa: E402,F401
 
 # CLI
-{{cookiecutter.module_name}}_cli_bp: Blueprint = Blueprint(
-    "{{cookiecutter.plugin_name}}", __name__
-)
+{{cookiecutter.module_name}}_cli_bp: Blueprint = Blueprint("{{cookiecutter.plugin_name}}", __name__)
 {{cookiecutter.module_name}}_cli_bp.cli.help = "{{cookiecutter.plugin_name}} CLI commands"
 from {{cookiecutter.module_name}}.cli import commands  # noqa: E402,F401
-
-
