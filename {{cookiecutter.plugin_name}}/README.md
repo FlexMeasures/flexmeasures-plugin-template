@@ -1,4 +1,4 @@
-# {{cookiecutter.plugin_displayname}} plugin for FlexMeasures
+# {{cookiecutter.plugin_name}} - a plugin for FlexMeasures
 
 
 ## Usage
@@ -6,10 +6,10 @@
 
 ## Installation
 
-1. Add the path to this directory to your FlexMeasures (>v0.4.0) config file,
+1. Add the path to this directory to your FlexMeasures (>v0.6.0) config file,
 using the FLEXMEASURES_PLUGIN_PATHS setting.
 
-2. 
+2.  
 
 
 ## Development

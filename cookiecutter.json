@@ -1,4 +1,10 @@
 {
-  "plugin_name": "your_plugin",
-  "plugin_displayname": "The full name of your plugin"
+  "plugin_name": "Your plugin name, e.g. 'My Plugin'. Prepending 'FlexMeasures-' is a nice convention for integration plugins.",
+  "plugin_slug": "{{ cookiecutter.plugin_name|lower|replace(' ', '-') }}",
+  "module_name": "{{ cookiecutter.plugin_slug|replace('-', '_') }}",
+  "description": "",
+  "author_name": "",
+  "author_email": "",
+  "plugin_url": "",
+  "minimal_flexmeasures_version": "0.6.0"
 }
