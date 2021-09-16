@@ -30,7 +30,10 @@ from {{cookiecutter.module_name}}.api import somedata  # noqa: E402,F401
 
 # UI
 {{cookiecutter.module_name}}_ui_bp: Blueprint = Blueprint(
-    "{{cookiecutter.plugin_name}} UI", __name__, template_folder="ui/templates", url_prefix="/{{cookiecutter.plugin_slug}}"
+    "{{cookiecutter.plugin_name}} UI",
+    __name__,
+    template_folder="ui/templates",
+    url_prefix="/{{cookiecutter.plugin_slug}}"
 )
 from {{cookiecutter.module_name}}.ui.views import dashboard  # noqa: E402,F401
 {% endif %}
