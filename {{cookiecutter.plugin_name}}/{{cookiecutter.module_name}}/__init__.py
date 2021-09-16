@@ -1,9 +1,14 @@
+"""
+The __init__ for the {{cookiecutter.plugin_name}} FlexMeasures plugin.
+"""
+
+__version__ = "Unknown version"
+
+
 from importlib_metadata import version, PackageNotFoundError
 
 from flask import Blueprint
 
-
-__version__ = "Unknown version"
 
 # This uses importlib.metadata behaviour added in Python 3.8
 # and relies on setuptools_scm.

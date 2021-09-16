@@ -6,7 +6,7 @@
 
 ## Installation
 
-1. Add {{cookiecutter.module_name}} to your FlexMeasures (>v0.6.0) config file,
+1. Add "{{cookiecutter.module_name}}" to your FlexMeasures (>v0.7.0) config file,
    using the FLEXMEASURES_PLUGINS setting (a list).
 
 2.  

@@ -20,7 +20,7 @@ setup(
     author="{{cookiecutter.author_name}}",
     author_email="{{cookiecutter.author_email}}",
     url="{{cookiecutter.plugin_url}}",
-    keywords=[],
+    keywords=["flexmeasures", "energy flexibility"],
     install_requires=load_requirements("app"),
     tests_require=load_requirements("test"),
     setup_requires=["pytest-runner", "setuptools_scm"],
