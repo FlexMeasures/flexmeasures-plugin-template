@@ -1,0 +1,12 @@
+
+{{ '{%' }} extends "base_{{ cookiecutter.module_name }}.html" {{ '%}' }}
+
+{{ '{%' }} set active_page = "{{ cookiecutter.plugin_slug }}/dashboard"  {{ '%}' }}
+
+{{ '{%' }} block title {{ '%}' }} The {{ cookiecutter.plugin_name }} dashboard {{ '{%' }} endblock {{ '%}' }}
+
+{% raw %}
+{% block divs %}
+Some content ...
+{% endblock %}
+{% endraw %}
