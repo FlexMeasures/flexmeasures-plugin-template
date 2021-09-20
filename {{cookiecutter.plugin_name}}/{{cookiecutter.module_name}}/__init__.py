@@ -1,5 +1,7 @@
 """
 The __init__ for the {{cookiecutter.plugin_name}} FlexMeasures plugin.
+
+FlexMeasures registers the BluePrint objects it finds in here.
 """
 
 __version__ = "Unknown version"
