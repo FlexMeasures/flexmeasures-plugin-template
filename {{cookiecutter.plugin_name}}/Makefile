@@ -11,12 +11,13 @@ test:
 
 # ---- Installation ---
 
-install: install-deps install-{cookiecutter.plugin_slug}
+install: install-deps install-{{cookiecutter.plugin_slug}}
 
 install-for-dev:
 	make freeze-deps
 	pip-sync requirements/app.txt requirements/dev.txt requirements/test.txt
-	make install-{cookiecutter.plugin_slug}
+	make install-{{cookiecutter.plugin_slug}}
+	pre-commit install
 
 install-deps:
 	make install-pip-tools
