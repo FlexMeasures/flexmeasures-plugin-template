@@ -1,12 +1,12 @@
 {
-  "plugin_name": "Your plugin name, e.g. 'My Plugin'. Prepending 'flexmeasures-' is a nice convention for integration plugins.",
+  "plugin_name": "Your plugin name, e.g. 'MyPlugin'. Spaces possible. Prepending 'flexmeasures-' is a nice convention for integration plugins.",
   "plugin_slug": "{{ cookiecutter.plugin_name|lower|replace(' ', '-') }}",
   "module_name": "{{ cookiecutter.plugin_slug|replace('-', '_') }}",
   "description": "",
   "author_name": "",
   "author_email": "",
   "plugin_url": "",
-  "minimal_flexmeasures_version": "0.7.0",
+  "minimal_flexmeasures_version": "0.7.0.dev37",
   "api_blueprint": "y",
   "ui_blueprint": "y",
   "cli_blueprint": "y"

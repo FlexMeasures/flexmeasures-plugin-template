@@ -13,4 +13,5 @@ from .. import {{cookiecutter.module_name}}_cli_bp
 @with_appcontext
 @task_with_status_report
 def hello_world(name: str):
-    current_app.logger.info(f"Hello, {name}!")
+    print(f"Hello, {name}!")
+    current_app.logger.info(f"'Hello, {name}!' printed")

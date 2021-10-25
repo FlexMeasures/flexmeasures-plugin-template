@@ -12,6 +12,7 @@ from importlib_metadata import version, PackageNotFoundError
 
 from flask import Blueprint
 
+from .utils import ensure_bp_routes_are_loaded_fresh
 
 # Overwriting version (if possible) from the package metadata
 # ― if this plugin has been installed as a package.
@@ -29,6 +30,7 @@ except PackageNotFoundError:
 {{cookiecutter.module_name}}_api_bp: Blueprint = Blueprint(
     "{{cookiecutter.plugin_name}} API", __name__, url_prefix="/{{cookiecutter.plugin_slug}}/api"
 )
+ensure_bp_routes_are_loaded_fresh("api.somedata")
 from {{cookiecutter.module_name}}.api import somedata  # noqa: E402,F401
 {% endif %}
 {%- if cookiecutter.ui_blueprint | lower == 'y' %}
@@ -40,6 +42,7 @@ from {{cookiecutter.module_name}}.api import somedata  # noqa: E402,F401
     template_folder="ui/templates",
     url_prefix="/{{cookiecutter.plugin_slug}}"
 )
+ensure_bp_routes_are_loaded_fresh("ui.views.dashboards")
 from {{cookiecutter.module_name}}.ui.views import dashboard  # noqa: E402,F401
 {% endif %}
 {%- if cookiecutter.cli_blueprint | lower == 'y' %}
@@ -47,5 +50,6 @@ from {{cookiecutter.module_name}}.ui.views import dashboard  # noqa: E402,F401
 # CLI
 {{cookiecutter.module_name}}_cli_bp: Blueprint = Blueprint("{{cookiecutter.plugin_name}}", __name__)
 {{cookiecutter.module_name}}_cli_bp.cli.help = "{{cookiecutter.plugin_name}} CLI commands"
+ensure_bp_routes_are_loaded_fresh("cli.commands")
 from {{cookiecutter.module_name}}.cli import commands  # noqa: E402,F401
 {% endif %}
