@@ -48,7 +48,11 @@ from {{cookiecutter.module_name}}.ui.views import dashboard  # noqa: E402,F401
 {%- if cookiecutter.cli_blueprint | lower == 'y' %}
 
 # CLI
-{{cookiecutter.module_name}}_cli_bp: Blueprint = Blueprint("{{cookiecutter.plugin_name}}", __name__)
+{{cookiecutter.module_name}}_cli_bp: Blueprint = Blueprint(
+    "{{cookiecutter.plugin_name}} CLI",
+    __name__,
+    cli_group="{{cookiecutter.plugin_slug}}"
+)
 {{cookiecutter.module_name}}_cli_bp.cli.help = "{{cookiecutter.plugin_name}} CLI commands"
 ensure_bp_routes_are_loaded_fresh("cli.commands")
 from {{cookiecutter.module_name}}.cli import commands  # noqa: E402,F401
