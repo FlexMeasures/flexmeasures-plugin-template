@@ -1,7 +1,8 @@
 import pytest
 
 from flexmeasures.app import create as create_flexmeasures_app
-
+from flexmeasures.conftest import db, fresh_db  # Use these fixtures to rely on the FlexMeasures database.
+                                                # There might be others in flexmeasures/conftest you want to also re-use
 
 @pytest.fixture(scope="session")
 def app():
