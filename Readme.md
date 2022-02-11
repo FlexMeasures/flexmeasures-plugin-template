@@ -5,7 +5,7 @@ This template helps you to rapidly get ready to add custom functionality to Flex
 - Several Blueprints prepared to add functionality right away (e.g. for UI views, API endpoints, CLI commands)
 - Professional coding practices (see below on conventions)
 
-If you want something simpler, we document a one-file approach [here](https://flexmeasures.readthedocs.io/en/latest/dev/plugins.html).
+If you want something simpler, we describe a one-file approach [here](https://flexmeasures.readthedocs.io/en/latest/dev/plugins.html).
 
 
 ## Usage
