@@ -8,7 +8,7 @@
 
 1. Add "/path/to/{{cookiecutter.plugin_name}}/{{cookiecutter.module_name}}" to your FlexMeasures (>v0.7.0dev8) config file,
    using the FLEXMEASURES_PLUGINS setting (a list).
-   Alternatively, if you installed this plugin as a package, then "{{cookiecutter.module_name}}" suffices.
+   Alternatively, if you installed this plugin as a package (e.g. via `python setup.py install`, `pip install -e` or `pip install {{cookiecutter.module_name}}` should this project be on Pypi), then "{{cookiecutter.module_name}}" suffices.
 
 2.  
 
