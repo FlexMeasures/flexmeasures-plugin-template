@@ -12,7 +12,7 @@ If you want something simpler, we describe a one-file approach [here](https://fl
 
 ```
 pip install cookiecutter
-cookiecutter https://github.com/SeitaBV/flexmeasures-plugin-template
+cookiecutter https://github.com/FlexMeasures/flexmeasures-plugin-template
 ```
 
 This will ask you about your project name etc.
