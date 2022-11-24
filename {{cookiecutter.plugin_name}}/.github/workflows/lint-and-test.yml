@@ -6,7 +6,7 @@ on: push
 jobs:
   check:
     runs-on: ubuntu-latest
-    name: Check (on Python3.8)
+    name: "Check (on Python3.8)"
     steps:
       - uses: actions/setup-python@v2
         with:
@@ -19,13 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        py_version: [ '3.8', '3.9' ]
-    name: "Test (on Python ${{ matrix.py_version }})"
+    name: "Test (on Python 3.9)"
     steps:
       - uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.py_version }}
+          python-version: 3.9
       - name: Check out src from Git
         uses: actions/checkout@v2
       - name: Get history and tags for SCM versioning to work
