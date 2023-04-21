@@ -5,7 +5,7 @@ This template helps you to rapidly get ready to add custom functionality to Flex
 - Several Blueprints prepared to add functionality right away (e.g. for UI views, API endpoints, CLI commands)
 - Professional coding practices (see below on conventions)
 
-If you want something simpler, we describe a one-file approach [here](https://flexmeasures.readthedocs.io/en/latest/dev/plugins.html).
+If you want something simpler, we describe a one-file approach [here](https://flexmeasures.readthedocs.io/en/latest/plugin/showcase.html).
 
 
 ## Usage
@@ -22,7 +22,7 @@ The result is a directory, which can be used as a starting point for a FlexMeasu
 You will get three blueprints and sub-packages installed, "api", "ui" and "cli". These are the cornerstones of pluggable functionality in FlexMeasures plugins.
 You can remove any of them (remove the folder and also the blueprint initialization from `__init__.py`).  
 
-For more info on FlexMeasures plugin development, see also [the FlexMeasures documentation on plugins](https://flexmeasures.readthedocs.io/en/latest/dev/plugins.html).
+For more info on FlexMeasures plugin development, see also [the FlexMeasures documentation on plugins](https://flexmeasures.readthedocs.io/en/latest/plugin/introduction.html).
 
 
 ## Conventions
