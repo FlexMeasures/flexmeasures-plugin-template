@@ -6,7 +6,7 @@
   "author_name": "",
   "author_email": "",
   "plugin_url": "",
-  "minimal_flexmeasures_version": "0.7.0",
+  "minimal_flexmeasures_version": "0.12.0",
   "api_blueprint": "y",
   "ui_blueprint": "y",
   "cli_blueprint": "y"
