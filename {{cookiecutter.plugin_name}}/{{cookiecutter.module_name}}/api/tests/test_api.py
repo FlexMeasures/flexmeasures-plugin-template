@@ -7,8 +7,8 @@ def test_get_somedata_needs_authtoken(client):
         headers={"content-type": "application/json"},
         follow_redirects=True
     )
-    assert response.status_code == 401  # should be 401
-    assert "application/json" in response.content_type  # response should be JSON
+    assert response.status_code == 401  # HTTP error code 401 Unauthorized.
+    assert "application/json" in response.content_type
     assert "not be properly authenticated" in response.json["message"]
 
     
