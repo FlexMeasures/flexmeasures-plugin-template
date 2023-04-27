@@ -1,10 +1,13 @@
 -c app.txt
 -c test.txt
 
-pre-commit
+# the two below can go away (we just need pre-commit) if FlexMeasures distributions tops pinning dependencies
+# (https://github.com/FlexMeasures/flexmeasures/discussions/648)
+pre-commit < 2.11.1
+virtualenv==20.0.8
 # we're pinning the following two to what .pre-commit-config.yaml says
-black==22.3.0
-flake8==4.0.1
+black==22.10.0
+flake8==6.0.0
 flake8-blind-except
 mypy
 pytest-runner
