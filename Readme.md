@@ -103,7 +103,7 @@ We included a few dummy tests for you to overwrite.
 To make your work publicly available (and also pip-installable), publish it to Pypi.
 We suggest going through the above section to install your plugin locally first.
 
-Here is the neecessary code you should run:
+Here is the necessary code you should run:
 
 ```
 rm -rf build/* dist/*
