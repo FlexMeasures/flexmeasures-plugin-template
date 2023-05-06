@@ -39,7 +39,7 @@ We are using some opinionated conventions which stem from our work on FlexMeasur
 You have two options for FlexMeasures to recognize your plugin when starting (e.g. with `flexmeasures run` or any other command):
 
 - point the config setting `FLEXMEASURES_PLUGINS` to the module folder (containing the `__init__.py` file). Both relative or absolute paths work.
-- install your plugin as a Python package (e.g. `python setup.py install` or even `pip install <your_package>` in case you distribute it). For FlexMeasures to load it, the `FLEXMEASURES_PLUGINS` setting to add is the module name.
+- install your plugin as a Python package (e.g. `pip install -e` or even `pip install <your_package>` in case you distribute it). For FlexMeasures to load it, the `FLEXMEASURES_PLUGINS` setting to add is the module name.
 
 The first option (pointing to the directory) probably works best, especially for early development. As for a version, FlexMeasures will assume it to be "Unknown", unless you also give it a minimal git setup (as we describe below). Alternatively, you can also edit `__init__.py` and set the version there. 
 
