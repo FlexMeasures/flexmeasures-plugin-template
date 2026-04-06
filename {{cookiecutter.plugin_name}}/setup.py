@@ -1,16 +1,15 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 
-def load_requirements(use_case):
+def load_requirements():
     """
-    Loading range requirements.
-    Packaging should be used for installing the package into existing stacks.
-    We therefore read the .in file for the use case.
-    .txt files include the exact pins, and are useful for deployments with
-    exactly comparable environments.
+    Loading (extra) requirements for this plugin.
+
+    There should not be conflicts with FlexMeasures coming from here.
+    We should only add requirements which FlexMeasures does not depend on already.
     """
     reqs = []
-    with open("requirements/%s.in" % use_case, "r") as f:
+    with open("requirements.txt", "r") as f:
         reqs = [
             req
             for req in f.read().splitlines()
@@ -22,31 +21,4 @@ def load_requirements(use_case):
     return reqs
 
 
-setup(
-    name="{{cookiecutter.plugin_name}}",
-    description="{{cookiecutter.description}}",
-    author="{{cookiecutter.author_name}}",
-    author_email="{{cookiecutter.author_email}}",
-    url="{{cookiecutter.plugin_url}}",
-    keywords=["flexmeasures", "energy flexibility"],
-    install_requires=load_requirements("app"),
-    tests_require=load_requirements("test"),
-    setup_requires=["pytest-runner", "setuptools_scm"],
-    use_scm_version={"local_scheme": "no-local-version"},  # handled by setuptools_scm
-    packages=find_packages(),
-    include_package_data=True,  # setuptools_scm takes care of adding the files in SCM
-    classifiers=[
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
-        "Programming Language :: Python :: 3.12",
-        "Development Status :: 3 - Alpha",
-        "License :: OSI Approved :: Apache Software License",
-        "Operating System :: OS Independent",
-    ],
-    long_description="""\
-""",
-)
+setup(install_requires=load_requirements())
