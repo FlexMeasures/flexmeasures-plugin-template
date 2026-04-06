@@ -65,7 +65,7 @@ You could now run `make install-for-dev` (which installs dependencies and then y
 flexmeasures-testplugin 0.1.0      /your/path/to/flexmeasures-testplugin
 ```
 
-Note that you wouldn't need to install FlexMeasures seperately, as FlexMeasures is now a dependency of your plugin :) The FlexMeasures version you selected during the initial setup is a minimum, and if you install FlexMeasures, pip will be free to select the latest. If you want the exact version, change ``>=`` in `requirements.txt` to `==`.
+Note that you wouldn't need to install FlexMeasures separately, as FlexMeasures is now a dependency of your plugin :)
 
 You can add other dependencies of yours in `requirements.txt`. Actually, even other FlexMeasures plugins could become dependencies of your plugin (if they have been distributed on Pypi). Very useful if you depend on certain data integrations.
 

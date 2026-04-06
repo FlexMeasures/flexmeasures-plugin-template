@@ -24,6 +24,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dynamic = ["dependencies"]
+version = "0.1"
 
 [project.urls]
 Homepage = "{{cookiecutter.plugin_url}}"
