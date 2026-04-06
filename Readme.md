@@ -59,7 +59,7 @@ source venv-for-my-plugin/bin/activate  # in the above method, you'd activate li
 
 ### Install dependencies and your plugin
 
-You could now run `make install-for-dev` (which installs dependencies and then your plugin via `python setup.py develop`) and then find something like this when you call `pip list`:
+You could now run `make install-for-dev` (which installs dependencies and then your plugin via `pip install -e .`) and then find something like this when you call `pip list`:
 
 ```
 flexmeasures-testplugin 0.1.0      /your/path/to/flexmeasures-testplugin
