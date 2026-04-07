@@ -9,7 +9,7 @@ FlexMeasures registers the BluePrint objects it finds in here.
 
 {% if cookiecutter.minimal_flexmeasures_version %}
 import warnings
-from importlib.metadata import version as pkg_version
+from importlib_metadata import version as pkg_version
 from packaging.version import Version
 
 try:
