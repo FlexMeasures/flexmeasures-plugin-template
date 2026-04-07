@@ -14,3 +14,11 @@ for path in REMOVE_PATHS:
             rmtree(path)
         else:
             os.unlink(path)
+
+# Show the user the FLEXMEASURES_PLUGINS path
+plugin_path = os.path.join(os.getcwd(), "{{cookiecutter.module_name}}")
+print(
+    f"\nSuccess! Your plugin '{{cookiecutter.plugin_name}}' has been created.\n"
+    f"\nTo load this plugin, add the following path to your FlexMeasures config:\n"
+    f"\n    FLEXMEASURES_PLUGINS = [\"{plugin_path}\"]\n"
+)

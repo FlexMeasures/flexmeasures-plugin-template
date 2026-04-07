@@ -1,0 +1,3 @@
+# Add extra dependencies for your plugin here.
+# FlexMeasures itself should not be listed ― it is the host application.
+

@@ -1,4 +1,4 @@
-__version__ = "Unknown version"
+__version__ = "0.1"
 
 
 """
@@ -7,22 +7,25 @@ The __init__ for the {{cookiecutter.plugin_name}} FlexMeasures plugin.
 FlexMeasures registers the BluePrint objects it finds in here.
 """
 
+{% if cookiecutter.minimal_flexmeasures_version %}
+import warnings
+from importlib_metadata import version as pkg_version
+from packaging.version import Version
 
-from importlib_metadata import version, PackageNotFoundError
+try:
+    _fm_version = pkg_version("flexmeasures")
+    if Version(_fm_version) < Version("{{cookiecutter.minimal_flexmeasures_version}}"):
+        warnings.warn(
+            f"{{cookiecutter.plugin_name}} requires FlexMeasures >= {{cookiecutter.minimal_flexmeasures_version}}, "
+            f"but version {_fm_version} is installed."
+        )
+except Exception:
+    pass
+{% endif %}
 
 from flask import Blueprint
 
 from .utils import ensure_bp_routes_are_loaded_fresh
-
-# Overwriting version (if possible) from the package metadata
-# ― if this plugin has been installed as a package.
-# This uses importlib.metadata behaviour added in Python 3.8.
-# Note that we rely on git tags (via setuptools_scm) to define that version.
-try:
-    __version__ = version("{{cookiecutter.module_name}}")
-except PackageNotFoundError:
-    # package is not installed
-    pass
 
 {%- if cookiecutter.api_blueprint | lower == 'y' %}
 
