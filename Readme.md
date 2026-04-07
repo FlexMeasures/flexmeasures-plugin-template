@@ -65,7 +65,7 @@ You could now run `make install-for-dev` (which installs dependencies and then y
 flexmeasures-testplugin 0.1.0      /your/path/to/flexmeasures-testplugin
 ```
 
-Note that you wouldn't need to install FlexMeasures separately, as FlexMeasures is now a dependency of your plugin :)
+Note that FlexMeasures needs to be installed separately ― it is the host application for your plugin, not a dependency listed in `requirements.txt`.
 
 You can add other dependencies of yours in `requirements.txt`. Actually, even other FlexMeasures plugins could become dependencies of your plugin (if they have been distributed on Pypi). Very useful if you depend on certain data integrations.
 

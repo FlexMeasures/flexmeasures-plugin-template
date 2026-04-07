@@ -7,6 +7,21 @@ The __init__ for the {{cookiecutter.plugin_name}} FlexMeasures plugin.
 FlexMeasures registers the BluePrint objects it finds in here.
 """
 
+{% if cookiecutter.minimal_flexmeasures_version %}
+import warnings
+from importlib.metadata import version as pkg_version
+from packaging.version import Version
+
+try:
+    _fm_version = pkg_version("flexmeasures")
+    if Version(_fm_version) < Version("{{cookiecutter.minimal_flexmeasures_version}}"):
+        warnings.warn(
+            f"{{cookiecutter.plugin_name}} requires FlexMeasures >= {{cookiecutter.minimal_flexmeasures_version}}, "
+            f"but version {_fm_version} is installed."
+        )
+except Exception:
+    pass
+{% endif %}
 
 from flask import Blueprint
 

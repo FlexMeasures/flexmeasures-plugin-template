@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "{{cookiecutter.plugin_name}}"
 description = "{{cookiecutter.description}}"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = "Apache-2.0"
 authors = [
     {name = "{{cookiecutter.author_name}}", email = "{{cookiecutter.author_email}}"}
@@ -15,7 +15,6 @@ keywords = ["flexmeasures", "energy flexibility"]
 classifiers = [
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
