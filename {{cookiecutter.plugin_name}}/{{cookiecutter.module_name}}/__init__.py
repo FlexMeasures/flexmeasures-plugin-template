@@ -45,7 +45,7 @@ from {{cookiecutter.module_name}}.api import somedata  # noqa: E402,F401
     template_folder="ui/templates",
     url_prefix="/{{cookiecutter.plugin_slug}}"
 )
-ensure_bp_routes_are_loaded_fresh("ui.views.dashboards")
+ensure_bp_routes_are_loaded_fresh("ui.views.dashboard")
 from {{cookiecutter.module_name}}.ui.views import dashboard  # noqa: E402,F401
 {% endif %}
 {%- if cookiecutter.cli_blueprint | lower == 'y' %}
