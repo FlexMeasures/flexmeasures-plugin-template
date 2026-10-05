@@ -22,6 +22,12 @@ The result is a directory, which can be used as a starting point for a FlexMeasu
 You are asked if you need one or more of three blueprints and sub-packages installed, "api", "ui" and "cli". These are the cornerstones of pluggable functionality in FlexMeasures plugins.
 You can remove any of them later (remove the folder and also the blueprint initialization from `__init__.py`).
 
+You are also asked if you want an example automation type (`automation`, default "n").
+It adds an `automations` sub-package with an example data generator, registered in `__automation_types__`, so FlexMeasures can run it on a schedule.
+The generated plugin's README explains how to create, trigger and run it.
+FlexMeasures only loads a plugin that defines a Blueprint, so if you choose none of the three blueprints, the plugin gets an empty one.
+Automation types from plugins require FlexMeasures v1.1.0 or later, so also set `minimal_flexmeasures_version` to at least `1.1.0`.
+
 For more info on FlexMeasures plugin development, see also [the FlexMeasures documentation on plugins](https://flexmeasures.readthedocs.io/latest/plugin/introduction.html).
 
 
