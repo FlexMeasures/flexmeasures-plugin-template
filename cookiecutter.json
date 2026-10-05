@@ -9,5 +9,6 @@
   "minimal_flexmeasures_version": "",
   "api_blueprint": "y",
   "ui_blueprint": "y",
-  "cli_blueprint": "y"
+  "cli_blueprint": "y",
+  "automation": "n"
 }

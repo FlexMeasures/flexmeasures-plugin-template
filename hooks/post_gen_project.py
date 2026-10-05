@@ -5,6 +5,7 @@ REMOVE_PATHS = [
     '{% if cookiecutter.api_blueprint | lower != "y" %} {{cookiecutter.module_name}}/api {% endif %}',
     '{% if cookiecutter.ui_blueprint | lower != "y" %} {{cookiecutter.module_name}}/ui {% endif %}',
     '{% if cookiecutter.cli_blueprint | lower != "y" %} {{cookiecutter.module_name}}/cli {% endif %}',
+    '{% if cookiecutter.automation | lower != "y" %} {{cookiecutter.module_name}}/automations {% endif %}',
 ]
 
 for path in REMOVE_PATHS:

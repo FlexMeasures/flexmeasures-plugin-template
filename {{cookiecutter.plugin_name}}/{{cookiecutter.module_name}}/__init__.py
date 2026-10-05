@@ -4,7 +4,12 @@ __version__ = "0.1"
 """
 The __init__ for the {{cookiecutter.plugin_name}} FlexMeasures plugin.
 
+{% if cookiecutter.automation | lower == 'y' -%}
+FlexMeasures registers the BluePrint objects it finds in here,
+and the automation types listed in `__automation_types__`.
+{%- else -%}
 FlexMeasures registers the BluePrint objects it finds in here.
+{%- endif %}
 """
 {%- if cookiecutter.minimal_flexmeasures_version %}
 
@@ -22,9 +27,13 @@ try:
 except Exception:
     pass
 {%- endif %}
-{%- if cookiecutter.api_blueprint | lower == 'y' or cookiecutter.ui_blueprint | lower == 'y' or cookiecutter.cli_blueprint | lower == 'y' %}
+{%- set has_blueprints = cookiecutter.api_blueprint | lower == 'y' or cookiecutter.ui_blueprint | lower == 'y' or cookiecutter.cli_blueprint | lower == 'y' %}
+{%- set has_automation = cookiecutter.automation | lower == 'y' %}
+{%- if has_blueprints or has_automation %}
 
 from flask import Blueprint
+{%- endif %}
+{%- if has_blueprints %}
 
 from .utils import ensure_bp_routes_are_loaded_fresh
 {%- endif %}
@@ -63,4 +72,18 @@ CLI_HELP = "{{cookiecutter.plugin_name}} CLI commands"
 {{cookiecutter.module_name}}_cli_bp.cli.help = CLI_HELP
 ensure_bp_routes_are_loaded_fresh("cli.commands")
 from .cli import commands  # noqa: E402,F401
+{%- endif %}
+{%- if has_automation %}
+{%- if not has_blueprints %}
+
+# FlexMeasures only loads a plugin that defines at least one Blueprint,
+# so this one stands in until the plugin gets an API, UI or CLI.
+{{cookiecutter.module_name}}_bp: Blueprint = Blueprint(
+    "{{cookiecutter.plugin_name}}",
+    __name__,
+)
+{%- endif %}
+
+# Automations
+from .automations import __automation_types__  # noqa: E402,F401
 {%- endif %}
