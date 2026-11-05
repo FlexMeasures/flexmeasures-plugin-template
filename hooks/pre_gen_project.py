@@ -24,3 +24,10 @@ if "{{ cookiecutter.automation | lower }}" == "y":
             " Use a plugin slug of lowercase letters, digits, underscores or hyphens, starting with a letter."
         )
         sys.exit(1)
+
+    # Automation types from plugins arrived in FlexMeasures v1.1.0.
+    minimal_version = "{{ cookiecutter.minimal_flexmeasures_version }}"
+    version_match = re.match(r'^(\d+)\.(\d+)', minimal_version)
+    if minimal_version and (not version_match or tuple(map(int, version_match.groups())) < (1, 1)):
+        print(f"ERROR: automation types require FlexMeasures v1.1.0 or later, not {minimal_version}.")
+        sys.exit(1)

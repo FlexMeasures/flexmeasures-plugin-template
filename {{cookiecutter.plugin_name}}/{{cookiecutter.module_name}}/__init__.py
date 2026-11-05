@@ -11,7 +11,8 @@ and the automation types listed in `__automation_types__`.
 FlexMeasures registers the BluePrint objects it finds in here.
 {%- endif %}
 """
-{%- if cookiecutter.minimal_flexmeasures_version %}
+{%- set minimal_version = cookiecutter.minimal_flexmeasures_version or ("1.1.0" if cookiecutter.automation | lower == 'y' else "") %}
+{%- if minimal_version %}
 
 import warnings
 from importlib_metadata import version as pkg_version
@@ -19,9 +20,9 @@ from packaging.version import Version
 
 try:
     _fm_version = pkg_version("flexmeasures")
-    if Version(_fm_version) < Version("{{cookiecutter.minimal_flexmeasures_version}}"):
+    if Version(_fm_version) < Version("{{minimal_version}}"):
         warnings.warn(
-            f"{{cookiecutter.plugin_name}} requires FlexMeasures >= {{cookiecutter.minimal_flexmeasures_version}}, "
+            f"{{cookiecutter.plugin_name}} requires FlexMeasures >= {{minimal_version}}, "
             f"but version {_fm_version} is installed."
         )
 except Exception:

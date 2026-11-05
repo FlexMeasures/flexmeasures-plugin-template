@@ -26,7 +26,7 @@ You are also asked if you want an example automation type (`automation`, default
 It adds an `automations` sub-package with an example data generator, registered in `__automation_types__`, so FlexMeasures can run it on a schedule.
 The generated plugin's README explains how to create, trigger and run it.
 FlexMeasures only loads a plugin that defines a Blueprint, so if you choose none of the three blueprints, the plugin gets an empty one.
-Automation types from plugins require FlexMeasures v1.1.0 or later, so also set `minimal_flexmeasures_version` to at least `1.1.0`.
+Automation types from plugins require FlexMeasures v1.1.0 or later, so with this option, `minimal_flexmeasures_version` defaults to `1.1.0`, and a lower value is refused.
 
 For more info on FlexMeasures plugin development, see also [the FlexMeasures documentation on plugins](https://flexmeasures.readthedocs.io/latest/plugin/introduction.html).
 
