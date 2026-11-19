@@ -75,10 +75,16 @@ You can add other dependencies of yours in `requirements.txt`. Actually, even ot
 One final step could be to run your tests:
 
 ```
-pytest
+make test
 ```
 
+This installs the test tools from `requirements-dev.txt` and runs `pytest`.
+The tests use a Postgres database, at the address FlexMeasures uses in testing mode (`postgresql://flexmeasures_test:flexmeasures_test@localhost/flexmeasures_test`);
+set `SQLALCHEMY_TEST_DATABASE_URI` to use another one.
+FlexMeasures itself should already be installed, as it is the host application.
+
 We included a few dummy tests for you to overwrite.
+The plugin's GitHub workflow runs the same tests, against the minimal FlexMeasures version you chose (or the latest one), with a Postgres service.
 
 
 ## Publishing your plugin
