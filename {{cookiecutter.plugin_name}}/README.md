@@ -29,3 +29,7 @@ or:
 Try it:
 
     pre-commit run --all-files --show-diff-on-failure
+
+Run the tests with `make test`.
+They need a Postgres database at `postgresql://flexmeasures_test:flexmeasures_test@localhost/flexmeasures_test`,
+or wherever `SQLALCHEMY_TEST_DATABASE_URI` points.

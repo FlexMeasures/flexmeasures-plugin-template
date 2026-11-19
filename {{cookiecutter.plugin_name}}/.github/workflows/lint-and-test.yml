@@ -8,11 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     name: "Check (on Python3.11)"
     steps:
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: 3.11
-      - uses: actions/checkout@v3
-      - uses: pre-commit/action@v3.0.0
+      - uses: actions/checkout@v4
+      - uses: pre-commit/action@v3.0.1
 
   test:
     needs: check
@@ -20,10 +20,35 @@ jobs:
     strategy:
       fail-fast: false
     name: "Test (on Python 3.11)"
+    services:
+      # The tests run against a Postgres database, at the address FlexMeasures' testing config expects.
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: flexmeasures_test
+          POSTGRES_PASSWORD: flexmeasures_test
+          POSTGRES_DB: flexmeasures_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U flexmeasures_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: 3.11
       - name: Check out src from Git
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+{%- if cookiecutter.minimal_flexmeasures_version %}
+      # FlexMeasures is the host application, so it is not in requirements.txt.
+      # Testing against the minimal version this plugin supports keeps that promise honest.
+      - name: Install FlexMeasures {{ cookiecutter.minimal_flexmeasures_version }}
+        run: pip install "flexmeasures=={{ cookiecutter.minimal_flexmeasures_version }}"
+{%- else %}
+      # FlexMeasures is the host application, so it is not in requirements.txt.
+      - name: Install FlexMeasures
+        run: pip install flexmeasures
+{%- endif %}
       - run: make test

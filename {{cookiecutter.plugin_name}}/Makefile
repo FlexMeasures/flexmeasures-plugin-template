@@ -17,6 +17,7 @@ install:
 
 install-for-dev:
 	pip install -r requirements.txt
+	pip install -r requirements-dev.txt
 	make install
 	pre-commit install
 
