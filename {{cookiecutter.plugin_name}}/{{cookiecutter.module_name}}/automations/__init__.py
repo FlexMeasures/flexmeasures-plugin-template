@@ -12,8 +12,10 @@ from .generator import {{ cookiecutter.module_name|replace('_', ' ')|title|repla
 
 __automation_types__ = [
     AutomationHandler(
+        # A lowercase slug that identifies the type; stored automations refer to it.
         type_id="{{ cookiecutter.plugin_slug }}-example",
-        display_name="{{ cookiecutter.plugin_name }} example",
+        # The name of this type's tab on the automations page: a short, capitalized title, e.g. "Weather forecast import".
+        display_name="Example: input × factor",
         generator_class={{ cookiecutter.module_name|replace('_', ' ')|title|replace(' ', '') }}Generator,
         queue="ingestion",
         result_noun="measurement",
