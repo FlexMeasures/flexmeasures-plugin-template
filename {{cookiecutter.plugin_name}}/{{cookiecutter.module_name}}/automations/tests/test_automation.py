@@ -101,35 +101,46 @@ def test_output_must_belong_to_the_automated_asset(fresh_db, site):
         make_automation(site, {"sensor": sensors["elsewhere"].id})
 
 
+def measure(sensor, value, age):
+    """Record a measurement on the sensor, of an event that started `age` ago."""
+    now = server_now()
+    save_to_db(
+        tb.BeliefsDataFrame(
+            [
+                tb.TimedBelief(
+                    sensor=sensor,
+                    # Input comes from elsewhere, e.g. a meter, so it has a data source of its own.
+                    source=get_or_create_source("test meter", source_type="demo"),
+                    event_start=now - age,
+                    belief_time=now,
+                    event_value=value,
+                )
+            ]
+        )
+    )
+
+
+def run(app, automation):
+    """Queue a run of the automation and work on it, returning the finished or failed job."""
+    result = run_automation(automation)
+    job = Job.fetch(result["job_id"], connection=app.redis_connection)
+    work_on_rq(app.queues[get_automation_handler(AUTOMATION_TYPE).queue], job=job)
+    job.refresh()
+    return job
+
+
 def test_a_run_records_the_computed_value(app, fresh_db, site):
     site, sensors = site
     input_sensor, output_sensor = sensors["input"], sensors["output"]
-    now = server_now()
     automation = make_automation(
         site,
         {"sensor": output_sensor.id, "input-sensor": input_sensor.id},
         {"offset": 1.5, "factor": 2},
     )
-    save_to_db(
-        tb.BeliefsDataFrame(
-            [
-                tb.TimedBelief(
-                    sensor=input_sensor,
-                    # Input comes from elsewhere, e.g. a meter, so it has a data source of its own.
-                    source=get_or_create_source("test meter", source_type="demo"),
-                    event_start=now - timedelta(hours=1),
-                    belief_time=now,
-                    event_value=10,
-                )
-            ]
-        )
-    )
+    measure(input_sensor, 10, age=timedelta(minutes=30))
     fresh_db.session.commit()
 
-    result = run_automation(automation)
-    job = Job.fetch(result["job_id"], connection=app.redis_connection)
-    work_on_rq(app.queues[get_automation_handler(AUTOMATION_TYPE).queue], job=job)
-    job.refresh()
+    job = run(app, automation)
     assert job.is_finished, job.exc_info
 
     beliefs = (
@@ -137,3 +148,21 @@ def test_a_run_records_the_computed_value(app, fresh_db, site):
     )
     assert [belief.event_value for belief in beliefs] == [1.5 + 2 * 10]
     assert beliefs[0].source_id == automation.generator_id
+
+
+def test_a_run_fails_on_stale_input(app, fresh_db, site):
+    site, sensors = site
+    input_sensor, output_sensor = sensors["input"], sensors["output"]
+    automation = make_automation(
+        site, {"sensor": output_sensor.id, "input-sensor": input_sensor.id}
+    )
+    measure(input_sensor, 10, age=timedelta(hours=2))
+    fresh_db.session.commit()
+
+    job = run(app, automation)
+    assert job.is_failed
+    assert f"Input sensor {input_sensor.id} has no measurements since" in job.exc_info
+    assert (
+        fresh_db.session.query(TimedBelief).filter_by(sensor_id=output_sensor.id).all()
+        == []
+    )

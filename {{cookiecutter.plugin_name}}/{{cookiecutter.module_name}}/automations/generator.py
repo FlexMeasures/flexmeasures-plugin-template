@@ -2,11 +2,14 @@
 An example data generator, which an automation runs on its schedule.
 
 It records one value on the configured sensor for the current time slot:
-the `offset` parameter, plus `factor` times the latest value of the input sensor, if one is configured.
+the `offset` parameter, plus `factor` times the latest measurement of the input sensor, if one is configured.
+Input older than `MAX_INPUT_AGE` is not used: the run fails instead, so a meter or an API that went quiet gets noticed.
 Replace the computation with your own, e.g. fetching data from an external service.
 """
 
 from __future__ import annotations
+
+from datetime import timedelta
 
 from marshmallow import RAISE, Schema, fields
 import pandas as pd
@@ -15,6 +18,9 @@ import timely_beliefs as tb
 from flexmeasures.data.models.data_sources import DataGenerator
 from flexmeasures.data.schemas.sensors import SensorIdField
 from flexmeasures.utils.time_utils import server_now
+
+# Only measurements of events that started this recently count as current input.
+MAX_INPUT_AGE = timedelta(hours=1)
 
 
 class ExampleConfigSchema(Schema):
@@ -60,15 +66,25 @@ class {{ cookiecutter.module_name|replace('_', ' ')|title|replace(' ', '') }}Gen
 
     def _compute(self, offset: float, factor: float) -> list[dict]:
         sensor = self._config["sensor"]
+        now = server_now()
         value = offset
         input_sensor = self._config.get("input_sensor")
         if input_sensor is not None:
-            latest = input_sensor.latest_state()
-            if latest.empty:
-                raise ValueError(f"Input sensor {input_sensor.id} has no data yet.")
-            value += factor * float(latest["event_value"].iloc[-1])
+            # Without these bounds, a run would silently use the last measurement however old it is, as if it were current.
+            # Raising instead makes the run fail, and a failed run shows up on the automations page.
+            since = now - MAX_INPUT_AGE
+            recent = input_sensor.search_beliefs(
+                event_starts_after=since,
+                horizons_at_most=timedelta(0),
+                most_recent_beliefs_only=True,
+            )
+            if recent.empty:
+                raise ValueError(
+                    f"Input sensor {input_sensor.id} has no measurements since {since.isoformat()}."
+                )
+            recent = recent.sort_index(level="event_start")
+            value += factor * float(recent["event_value"].iloc[-1])
 
-        now = server_now()
         # Record the value for the time slot we are in, as the sensor's resolution defines it (in UTC).
         event_start = pd.Timestamp(now).tz_convert("UTC")
         if sensor.event_resolution:

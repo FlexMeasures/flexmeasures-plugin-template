@@ -17,7 +17,8 @@
 
 This plugin adds the automation type `{{cookiecutter.plugin_slug}}-example` to FlexMeasures (which requires FlexMeasures v1.1.0 or later).
 On each run, it records a value on the configured sensor for the current time slot:
-the `offset` parameter, plus `factor` times the latest value of the input sensor, if one is configured.
+the `offset` parameter, plus `factor` times the latest measurement of the input sensor, if one is configured.
+If the input sensor has no measurement from the last hour, the run fails, and shows up as failed on the automations page.
 Its data generator lives in `{{cookiecutter.module_name}}/automations/generator.py`, ready to be replaced by your own computation.
 
 Create an automation for an asset, with a configuration file naming the sensors:
