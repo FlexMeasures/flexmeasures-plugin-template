@@ -13,6 +13,7 @@ from flexmeasures.data.services.automations import (
     resolve_automation_sensors,
     run_automation,
 )
+from flexmeasures.data.services.data_sources import get_or_create_source
 from flexmeasures.data.utils import save_to_db
 from flexmeasures.utils.job_utils import work_on_rq
 from flexmeasures.utils.time_utils import server_now
@@ -78,7 +79,8 @@ def test_unknown_fields_are_rejected(fresh_db, site, field):
     site, sensors = site
     payload = {"config": {"sensor": sensors["output"].id}, "parameters": {}}
     payload[field]["unknown-field"] = 1
-    with pytest.raises(ValidationError):
+    # Match the field, as an automation type that is not registered raises a ValidationError too.
+    with pytest.raises(ValidationError, match="unknown-field"):
         make_automation(site, **payload)
 
 
@@ -113,7 +115,8 @@ def test_a_run_records_the_computed_value(app, fresh_db, site):
             [
                 tb.TimedBelief(
                     sensor=input_sensor,
-                    source=automation.generator,
+                    # Input comes from elsewhere, e.g. a meter, so it has a data source of its own.
+                    source=get_or_create_source("test meter", source_type="demo"),
                     event_start=now - timedelta(hours=1),
                     belief_time=now,
                     event_value=10,
