@@ -6,6 +6,8 @@ REMOVE_PATHS = [
     '{% if cookiecutter.ui_blueprint | lower != "y" %} {{cookiecutter.module_name}}/ui {% endif %}',
     '{% if cookiecutter.cli_blueprint | lower != "y" %} {{cookiecutter.module_name}}/cli {% endif %}',
     '{% if cookiecutter.automation | lower != "y" %} {{cookiecutter.module_name}}/automations {% endif %}',
+    # Only the Blueprints use utils.py.
+    '{% if cookiecutter.api_blueprint | lower != "y" and cookiecutter.ui_blueprint | lower != "y" and cookiecutter.cli_blueprint | lower != "y" %} {{cookiecutter.module_name}}/utils.py {% endif %}',
 ]
 
 for path in REMOVE_PATHS:
