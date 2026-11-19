@@ -1,0 +1,79 @@
+name: test-template
+
+# Generate plugins from this template, for a few combinations of options, and run their own lint and tests.
+# This catches template changes, and FlexMeasures changes, that would leave a newly generated plugin with a red CI.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  generated-plugin:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: "API, UI and CLI; latest FlexMeasures"
+            api: y
+            ui: y
+            cli: y
+            minimal_fm: ""
+          - name: "API only; FlexMeasures 1.1.0"
+            api: y
+            ui: n
+            cli: n
+            minimal_fm: "1.1.0"
+          - name: "CLI only; latest FlexMeasures"
+            api: n
+            ui: n
+            cli: y
+            minimal_fm: ""
+    name: ${{ matrix.name }}
+    # Same database as in the generated plugin's own CI workflow.
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: flexmeasures_test
+          POSTGRES_PASSWORD: flexmeasures_test
+          POSTGRES_DB: flexmeasures_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U flexmeasures_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      PLUGIN_DIR: ${{ github.workspace }}/../generated/flexmeasures-demo
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Generate the plugin
+        run: |
+          pip install cookiecutter
+          cookiecutter --no-input --output-dir "$(dirname "$PLUGIN_DIR")" . \
+            plugin_name=flexmeasures-demo \
+            api_blueprint=${{ matrix.api }} \
+            ui_blueprint=${{ matrix.ui }} \
+            cli_blueprint=${{ matrix.cli }} \
+            minimal_flexmeasures_version=${{ matrix.minimal_fm }}
+      # pre-commit only sees files tracked by git, as in the plugin's own repository.
+      - name: Lint the plugin
+        working-directory: ${{ env.PLUGIN_DIR }}
+        run: |
+          git init -q
+          git add -A
+          pip install pre-commit
+          pre-commit run --all-files --show-diff-on-failure
+      # Install FlexMeasures and run the tests the same way the plugin's own CI workflow does.
+      - name: Install FlexMeasures
+        run: pip install "flexmeasures${{ matrix.minimal_fm && format('=={0}', matrix.minimal_fm) || '' }}"
+      - name: Test the plugin
+        working-directory: ${{ env.PLUGIN_DIR }}
+        run: make test

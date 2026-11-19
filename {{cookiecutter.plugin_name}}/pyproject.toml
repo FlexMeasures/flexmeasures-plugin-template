@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=62", "wheel>=0.29.0"]
+requires = ["setuptools>=77", "wheel>=0.29.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -9,7 +9,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
 authors = [
-    {name = "{{cookiecutter.author_name}}", email = "{{cookiecutter.author_email}}"}
+    {name = "{{cookiecutter.author_name}}"{% if cookiecutter.author_email %}, email = "{{cookiecutter.author_email}}"{% endif %}}
 ]
 keywords = ["flexmeasures", "energy flexibility"]
 classifiers = [
@@ -19,14 +19,15 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Development Status :: 3 - Alpha",
-    "License :: OSI Approved :: Apache Software License",
     "Operating System :: OS Independent",
 ]
 dynamic = ["dependencies"]
 version = "0.1"
+{%- if cookiecutter.plugin_url %}
 
 [project.urls]
 Homepage = "{{cookiecutter.plugin_url}}"
+{%- endif %}
 
 [tool.setuptools]
 include-package-data = true

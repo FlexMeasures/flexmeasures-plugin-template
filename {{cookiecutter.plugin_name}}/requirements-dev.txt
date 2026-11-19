@@ -1,0 +1,8 @@
+# Tools for developing and testing this plugin, installed by `make install-for-dev`.
+pre-commit
+pytest
+# Provides the `client` fixture used by the API and UI tests.
+pytest-flask
+# FlexMeasures uses these when it runs in testing mode, but does not install them itself.
+fakeredis
+lupa
